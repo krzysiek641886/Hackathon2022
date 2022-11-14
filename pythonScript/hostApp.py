@@ -27,7 +27,9 @@ def print_plot(x, y, z, pos_x, pos_y, pos_z):
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(x, y, z, zdir='z', c='green')
     ax.scatter(pos_x, pos_y, pos_z, zdir='z', c='red', s=500)
+    
     plt.show()
+
 
 
 def find_index(pos_x, pos_y, x_arr, y_arr):
@@ -76,9 +78,10 @@ def get_angles(nabo):
 
 
 def main(argv):
-    if ("help" in argv[0]):
+    if ("help" in argv[0] or len(argv) != 4):
         print("Call program with following order:")
-        print("python hostApp.py <map_grid_file> <point_x_coordinate> <point_y_coordinate>")
+        print("python hostApp.py <map_grid_file> <point_x_coordinate> <point_y_coordinate> <com-port>")
+        sys.exit(0)
     else:
         f = open(argv[0])
         data = json.load(f)
@@ -88,21 +91,23 @@ def main(argv):
         pos_y = round(float(argv[2]) * 2) / 2
         matching_index = find_index(pos_x, pos_y, x, y)
         pos_z = z[matching_index]
-        print_plot(x, y, z, pos_x, pos_y, pos_z)
+        
         neighbours = find_neighbours(x, y, z, matching_index)
         angles = get_angles(neighbours)
-        print(angles)
-        print(angles[0])
-        print(angles[1])
+
         
-        ser = serial.Serial("COM17", 115200)
+        ser = serial.Serial()
+        ser.baudrate = 115200
+        ser.port = argv[3]
+        ser.open()
    
         # Send character ' to start the program
-        ser.write(bytearray('0,0','ascii'))
-
-        # Read line 
-        bs = ser.readline()
-        print(bs)
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        
+        
+        print_plot(x, y, z, pos_x, pos_y, pos_z)
+        
 
 if __name__ == "__main__":
     main(sys.argv[1:])
