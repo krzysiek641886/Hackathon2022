@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 # z = 1/500 (-x^2 - y^2 + 5001)
 
 def main():
-    step = 0.5
+    step = 5.0
     MIN = -50
     MAX = 50
     mesh_dict = []

@@ -5,7 +5,7 @@ import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-STEP = 0.5
+STEP = 5.0
 MIN = -50
 MAX = 50
 
@@ -25,7 +25,7 @@ def print_plot(x, y, z, pos_x, pos_y, pos_z):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(x, y, z, zdir='z', c='green')
-    ax.scatter(pos_x, pos_y, pos_z, zdir='z', c='red', s=1000)
+    ax.scatter(pos_x, pos_y, pos_z, zdir='z', c='red', s=500)
     plt.show()
 
 
@@ -87,10 +87,8 @@ def main(argv):
         pos_y = round(float(argv[2]) * 2) / 2
         matching_index = find_index(pos_x, pos_y, x, y)
         pos_z = z[matching_index]
-        print(pos_x, pos_y, pos_z)
-        # print_plot(x, y, z, pos_x, pos_y, pos_z)
+        print_plot(x, y, z, pos_x, pos_y, pos_z)
         neighbours = find_neighbours(x, y, z, matching_index)
-        print(neighbours)
         angles = get_angles(neighbours)
         print(angles)
 
