@@ -40,6 +40,9 @@ int seperatorIndex[] = {0,0};
 int servoAngle[] = {0,0};
 int servoIndex = 0;
 
+//Flags
+bool recievedString = false;
+bool updateServos = false;
 
 void loop() {
   int pos;
@@ -76,39 +79,48 @@ void loop() {
         Serial.println("No ',' found, please input 2 angles.");
         break;
       }
-      Serial.print("Seperator index: ");
-      Serial.println(seperatorIndex[1] );
-      Serial.println(serialBuffer+seperatorIndex[1] );
+      // Serial.print("Seperator index: ");
+      // Serial.println(seperatorIndex[1] );
+      // Serial.println(serialBuffer+seperatorIndex[1] );
 
+
+      // DO math to make input into an angle
+      
       for (int i = 0; i < 2; i++)
       {
         servoAngle[i] = atoi(serialBuffer+seperatorIndex[i]);
-        Serial.print("Read angle: ");
+        Serial.print("Read angle "); Serial.print(i); Serial.print(": ");
         Serial.println(servoAngle[i]);
 
-        if (servoAngle[i] < 0)
+        if (servoAngle[i] > 90)
         {
-          servoAngle[i] = servoAngle[i] * -1;
+          servoAngle[i] = 90;
         }
-        if (servoAngle[i] > 180)
+        if (servoAngle[i] < -90)
         {
-          servoAngle[i] = servoAngle[i] % 180;
+          servoAngle[i] = -90;
         }
-        
       }
       
-      Serial.print("Moving to angle: ");
-      Serial.println(servoAngle[0]);
-      myservo.write(servoAngle[0]);              // tell servo to go to position in variable 'pos'
-      
-      Serial.print("Moving to angle: ");
-      Serial.println(servoAngle[1]);
-      myservo2.write(servoAngle[1]);              // tell servo to go to position in variable 'pos'
-
-      Serial.println();
+      updateServos = true;
     }
     
   }
+
+  if (updateServos)
+  {
+    updateServos = false;
+    Serial.print("Moving to angle: ");
+    Serial.println(servoAngle[0]+90);
+    myservo.write(servoAngle[0]+90);              // tell servo to go to position in variable 'pos'
+    
+    Serial.print("Moving to angle: ");
+    Serial.println(90-servoAngle[0]);
+    myservo2.write(90-servoAngle[0]);              // tell servo to go to position in variable 'pos'
+
+    Serial.println();
+  }
+  
 
   
 }
