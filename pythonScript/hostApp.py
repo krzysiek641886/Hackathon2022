@@ -4,6 +4,7 @@ import sys
 import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import serial
 
 STEP = 5.0
 MIN = -50
@@ -91,6 +92,17 @@ def main(argv):
         neighbours = find_neighbours(x, y, z, matching_index)
         angles = get_angles(neighbours)
         print(angles)
+        print(angles[0])
+        print(angles[1])
+        
+        ser = serial.Serial("COM17", 115200)
+   
+        # Send character ' to start the program
+        ser.write(bytearray('0,0','ascii'))
+
+        # Read line 
+        bs = ser.readline()
+        print(bs)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
