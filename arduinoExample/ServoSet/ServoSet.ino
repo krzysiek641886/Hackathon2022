@@ -10,6 +10,7 @@
   http://arduino.cc/en/Tutorial/Sweep
 */
 
+#include <math.h>
 #include <Servo.h>
 
 Servo servo0;  // create servo object to control a servo
@@ -41,8 +42,13 @@ int bufferIndex = 0;
 int strLength = 0;
 int seperatorIndex[] = {0,0};
 
+int pitch = 0;
+int roll = 0;
+
 int servoAngle[] = {0,0};
 int servoIndex = 0;
+
+float temp = 0;
 
 //Flags
 bool recievedString = false;
@@ -88,25 +94,41 @@ void loop() {
       // Serial.println(serialBuffer+seperatorIndex[1] );
 
 
-      // Do math to make input into an angle
+    
       
-      for (int i = 0; i < 2; i++)
-      {
-        servoAngle[i] = atoi(serialBuffer+seperatorIndex[i]);
-        Serial.print("Read angle "); Serial.print(i); Serial.print(": ");
-        Serial.println(servoAngle[i]);
+      // get pitch and roll from input.
+      pitch = atoi(serialBuffer+seperatorIndex[0]);
+      roll = atoi(serialBuffer+seperatorIndex[1]);
+      Serial.print("pitch angle: "); Serial.print(pitch); Serial.print("  ");
+      Serial.print("roll angle: "); Serial.print(roll);
+      Serial.println("");
 
-        if (servoAngle[i] > 90)
-        {
-          servoAngle[i] = 90;
-        }
-        if (servoAngle[i] < -90)
-        {
-          servoAngle[i] = -90;
-        }
-      }
+
+      // Serial.print("tangent of pitch using (double) rad : ");
+      // Serial.println ( tan (double(pitch)/(180.0/3.1415)) ); // returns tangent of x
+      // Serial.print("tangent of pitch using deg : ");
+      // Serial.println ( tan (pitch) ); // returns tangent of x
+      // Serial.print("tangent of pitch using (double) deg : ");
+      // Serial.println ( tan (double(pitch)) ); // returns tangent of x
+      // Serial.print("130.0/(40.0/180.0) =  ");
+      // temp = 130.0/(40.0/180.0);
+      // Serial.println ( temp );
+
+
+
+      // tan(pitch)*130mm  /  ( 40mm/180deg ) = degServo
+      // servoAngle[0] = (tan(pitch)*130.0)/(40.0/180.0);
+      // servoAngle[1] = (tan(roll)*130.0)/(40.0/180.0);
+      servoAngle[0] = int(  tan(double(pitch)/(180.0/3.1415)) * ((585/2)*1.15) );
+      servoAngle[1] = int(  tan(double(roll)/(180.0/3.1415)) * ((585/2)*1.15) );
+      
+      Serial.print("pitchServo: "); Serial.print(servoAngle[0]); Serial.print("  ");
+      Serial.print("rollServo: "); Serial.print(servoAngle[1]);
+      Serial.println("");
       
       updateServos = true;
+      // servoAngle[0] = 0;
+      // servoAngle[1] = 0;
     }
     
   }
@@ -114,6 +136,20 @@ void loop() {
   if (updateServos)
   {
     updateServos = false;
+
+    for (int i = 0; i < 2; i++)
+    {
+      if (servoAngle[i] > 90)
+      {
+        servoAngle[i] = 90;
+      }
+      if (servoAngle[i] < -90)
+      {
+        servoAngle[i] = -90;
+      }
+    }
+    
+
     Serial.print("Moving to angle: ");
     Serial.println(servoAngle[0]+90);
     servo0.write(servoAngle[0]+90);              // tell servo to go to position in variable 'pos'
