@@ -75,6 +75,26 @@ def get_angles(nabo):
     roll = numpy.rad2deg(numpy.arctan( (ln["z"] - rn["z"]) / (STEP * 2)))
     return [pitch, roll]
 
+def mainFunctionality(pos_x, pos_y, com_port, x, y, z):
+    pos_x = round(float(pos_x) * 2) / 2
+    pos_y = round(float(pos_y) * 2) / 2
+    matching_index = find_index(pos_x, pos_y, x, y)
+    pos_z = z[matching_index]
+    
+    neighbours = find_neighbours(x, y, z, matching_index)
+    angles = get_angles(neighbours)
+
+    
+    ser = serial.Serial()
+    ser.baudrate = 115200
+    ser.port = com_port
+    ser.open()
+
+    # Send character ' to start the program
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    print_plot(x, y, z, pos_x, pos_y, pos_z)
+
 
 
 def main(argv):
@@ -85,29 +105,20 @@ def main(argv):
     else:
         f = open(argv[0])
         data = json.load(f)
-        [x, y, z] = getXYZ(data)
+        [x_arr, y_arr, z_arr] = getXYZ(data)
+        pos_x = argv[1]
+        pos_y = argv[2]
+        com_port = argv[3]
 
-        pos_x = round(float(argv[1]) * 2) / 2
-        pos_y = round(float(argv[2]) * 2) / 2
-        matching_index = find_index(pos_x, pos_y, x, y)
-        pos_z = z[matching_index]
-        
-        neighbours = find_neighbours(x, y, z, matching_index)
-        angles = get_angles(neighbours)
-
-        
-        ser = serial.Serial()
-        ser.baudrate = 115200
-        ser.port = argv[3]
-        ser.open()
-   
-        # Send character ' to start the program
-        print('{},{}'.format(int(angles[0]),int(angles[1])))
-        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-        
-        
-        print_plot(x, y, z, pos_x, pos_y, pos_z)
-        
+        while True:
+            mainFunctionality(pos_x, pos_y, com_port, x_arr, y_arr, z_arr)
+            inp = input('Some more coordinates? Write exit to stop\n')
+            args = inp.split(",")
+            if "exit" in inp or len(args) != 2:
+                break
+            print(args)
+            pos_x = args[0]
+            pos_y = args[1]
 
 if __name__ == "__main__":
     main(sys.argv[1:])
