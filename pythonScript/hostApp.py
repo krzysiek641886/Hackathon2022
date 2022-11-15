@@ -5,6 +5,7 @@ import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import serial
+import time
 
 STEP = 5.0
 MIN = -50
@@ -95,6 +96,99 @@ def mainFunctionality(pos_x, pos_y, com_port, x, y, z):
     ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
     print_plot(x, y, z, pos_x, pos_y, pos_z)
 
+def disco(comport):
+    ser = serial.Serial()
+    ser.baudrate = 115200
+    ser.port = comport
+    ser.open()
+    angles = [0,0]
+    
+    angles[0] = 10
+    angles[1] = 5
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[0] = 5
+    angles[1] = 10
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[0] = 0
+    angles[1] = 5
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[0] = -5
+    angles[1] = 10
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[0] = -10
+    angles[1] = 5
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[0] = -5
+    angles[1] = 0
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    
+    angles[0] = 0
+    angles[1] = 0
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    
+    angles[1] = 5
+    angles[0] = 0
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    
+    angles[1] = 10
+    angles[0] = 5
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[1] = 5
+    angles[0] = 10
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[1] = 0
+    angles[0] = 5
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[1] = -5
+    angles[0] = 10
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[1] = -10
+    angles[0] = 5
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    time.sleep(0.75)
+    
+    angles[1] = -5
+    angles[0] = 0
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    
+    angles[1] = 0
+    angles[0] = 0
+    print('{},{}'.format(int(angles[0]),int(angles[1])))
+    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+    
+    sys.exit(0)
 
 
 def main(argv):
@@ -102,6 +196,9 @@ def main(argv):
         print("Call program with following order:")
         print("python hostApp.py <map_grid_file> <point_x_coordinate> <point_y_coordinate> <com-port>")
         sys.exit(0)
+    elif (argv[1] == '1'  and argv[2] == '-1'):
+        print("DISCO!")
+        disco(argv[3])
     else:
         f = open(argv[0])
         data = json.load(f)
