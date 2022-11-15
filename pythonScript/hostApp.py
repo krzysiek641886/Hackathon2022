@@ -103,91 +103,93 @@ def disco(comport):
     ser.open()
     angles = [0,0]
     
-    angles[0] = 10
-    angles[1] = 5
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[0] = 5
-    angles[1] = 10
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[0] = 0
-    angles[1] = 5
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[0] = -5
-    angles[1] = 10
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[0] = -10
-    angles[1] = 5
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[0] = -5
-    angles[1] = 0
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    
-    angles[0] = 0
-    angles[1] = 0
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    
-    angles[1] = 5
-    angles[0] = 0
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    
-    angles[1] = 10
-    angles[0] = 5
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[1] = 5
-    angles[0] = 10
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[1] = 0
-    angles[0] = 5
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[1] = -5
-    angles[0] = 10
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[1] = -10
-    angles[0] = 5
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    time.sleep(0.75)
-    
-    angles[1] = -5
-    angles[0] = 0
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    
-    angles[1] = 0
-    angles[0] = 0
-    print('{},{}'.format(int(angles[0]),int(angles[1])))
-    ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
-    
+    for i in range(5):
+        angles[0] = 10
+        angles[1] = 5
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[0] = 5
+        angles[1] = 10
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[0] = 0
+        angles[1] = 5
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[0] = -5
+        angles[1] = 10
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[0] = -10
+        angles[1] = 5
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[0] = -5
+        angles[1] = 0
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        
+        angles[0] = 0
+        angles[1] = 0
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        
+        angles[1] = 5
+        angles[0] = 0
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        
+        angles[1] = 10
+        angles[0] = 5
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[1] = 5
+        angles[0] = 10
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[1] = 0
+        angles[0] = 5
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[1] = -5
+        angles[0] = 10
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[1] = -10
+        angles[0] = 5
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[1] = -5
+        angles[0] = 0
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        time.sleep(0.5)
+        
+        angles[1] = 0
+        angles[0] = 0
+        print('{},{}'.format(int(angles[0]),int(angles[1])))
+        ser.write(bytearray('{},{}\r'.format(angles[0],angles[1]),'ascii'))
+        
     sys.exit(0)
 
 
