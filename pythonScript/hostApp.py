@@ -103,7 +103,7 @@ def disco(comport):
     ser.open()
     angles = [0,0]
     
-    for i in range(5):
+    for i in range(2):
         angles[0] = 10
         angles[1] = 5
         print('{},{}'.format(int(angles[0]),int(angles[1])))
