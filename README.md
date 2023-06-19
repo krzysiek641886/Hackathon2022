@@ -1,4 +1,4 @@
-# TrackmanHackathon2022
+# Hackathon2022
 
 This project a working repository that was used during a hackathon. The project consisted of a leveled plane for golf that could represent an unevenness of the ground while playing on a simulator.
 - Arduino code for controlling electric motors connected to a leveled plane.
